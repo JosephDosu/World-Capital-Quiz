@@ -5,7 +5,7 @@ import pg from "pg";
 // Database Authentication
 const db = new pg.Client({
   user: "postgres",
-  host: "localhost",
+  host: "52.41.36.82",
   database: "Project",
   password: "Joseph123",
   port: 5431,
