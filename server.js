@@ -5,17 +5,16 @@ import pg from "pg";
 // Database Authentication
 const db = new pg.Client({
   user: "postgres",
-  host: "52.41.36.82",
-  database: "Project",
+  host: "localhost",
+  database: "postgres",
   password: "Joseph123",
-  port: 5431,
+  port: 5432,
 });
 
 db.connect();
 
 // Arrays to store quiz data
 let quiz = [];
-let quiz1 = [];
 let totalCorrect = 0;
 
 
@@ -35,9 +34,6 @@ async function fetchQuizData() {
   try {
     const capitalsRes = await db.query("SELECT * FROM capitals");
     quiz = capitalsRes.rows;
-    
-    const flagsRes = await db.query("SELECT * FROM flags");
-    quiz1 = flagsRes.rows;
   } catch (err) {
     console.error("Error fetching quiz data:", err.stack);
   }
@@ -45,7 +41,7 @@ async function fetchQuizData() {
 
 // Function to randomly generate the next question
 async function nextQuestion() {
-  if (quiz.length === 0 || quiz1.length === 0) {
+  if (quiz.length === 0) {
     throw new Error("Quiz data not available");
   }
 
@@ -59,7 +55,7 @@ async function nextQuestion() {
 app.get("/", async (req, res) => {
   try {
     // Ensure quiz is populated before proceeding
-    if (quiz.length === 0 || quiz1.length === 0) {
+    if (quiz.length === 0) {
       return res.status(500).send('Quiz data not available');
     }
     totalCorrect = 0;
