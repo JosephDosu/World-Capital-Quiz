@@ -18,6 +18,8 @@ let quiz = [];
 let quiz1 = [];
 let totalCorrect = 0;
 
+
+
 const port = 3000;
 const app = express();
 
@@ -33,6 +35,9 @@ async function fetchQuizData() {
   try {
     const capitalsRes = await db.query("SELECT * FROM capitals");
     quiz = capitalsRes.rows;
+    
+    const flagsRes = await db.query("SELECT * FROM flags");
+    quiz1 = flagsRes.rows;
   } catch (err) {
     console.error("Error fetching quiz data:", err.stack);
   }
